@@ -23,7 +23,7 @@ const ProductPage = () => {
     };
 
     const onClose = () => {
-        setProductDetail(null);
+        // setProductDetail(null);
         setOpen(false);
     };
 
@@ -76,18 +76,21 @@ const ProductPage = () => {
     }
     
 
+    const handleOpenDrawer = async (record) => {
+        // console.log('mở con cặc')
+        const pro = await findProductApi(record.id);
+        setProductDetail(pro.data);
+        showDrawer();
+    };
+
 
     const columns = [
     {
         title: 'ID',
         // dataIndex: 'id',
         key: 'id',
-        render: (_, record) => <a href='javascript:void(0)' onClick={async () => {
-            const pro = await findProductApi(record.id);
-            setProductDetail(pro.data);
-            // console.log(pro.data);
-            // console.log(productDetail);
-            showDrawer()    
+        render: (_, record) => <a href='javascript:void(0)' onClick={ () => {
+            handleOpenDrawer(record)
         }}>{record.id}</a>,
     },
     {
@@ -143,7 +146,7 @@ const ProductPage = () => {
                 Sửa
             </Button>
               <Popconfirm
-                title="Xóa danh mục"
+                title="Xóa Sản Phẩm"
                 description="Bạn có chắc muốn xóa chứ !!!"
                 onConfirm={() => confirm(record.id)}
                 onCancel={cancel}

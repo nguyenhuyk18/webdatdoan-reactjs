@@ -4,16 +4,6 @@ import { useEffect } from 'react';
 const ProductDetail = (props) => {
     const { productDetail , onClose , open } = props
 
-    // console.log(productDetail);
-
-    // const [product , setProduct ] = useState(null);
-
-    // useEffect(() => {
-    //     if(detailProduct) {
-
-    //     }
-    // } , [detailProduct]);
-
 
     return (
         <Drawer
@@ -25,6 +15,7 @@ const ProductDetail = (props) => {
         <p style={{marginBottom: '20px'}}><b>Tên Sản Phẩm: </b> {productDetail?.product_name} </p>
         <p style={{marginBottom: '20px'}}><b>Tên Danh Mục: </b> {productDetail?.name_category} </p>
         <p style={{marginBottom: '20px'}}><b>Tên Thương Hiệu: </b> {productDetail?.name_brand} </p>
+        <p style={{marginBottom: '20px'}}><b>Loại Buffet: </b> {productDetail?.type_buffet == 1 ? 'Buffet Thường' : 'Buffet VIP'} </p>
         <p style={{marginBottom: '20px'}}><b>Mô tả: </b> <div dangerouslySetInnerHTML={{ __html: productDetail?.description }} /> </p>
         <p style={{marginBottom: '20px'}}><b>Hình Ảnh: </b></p>
         <Image     

@@ -82,7 +82,7 @@ const ModalEditProduct = (props) => {
                 product_name : productDetail.product_name,
                 id_category : productDetail.id_category,    
                 id_brand : productDetail.id_brand,
-                type_buffet : productDetail.type_buffet,
+                type_buffet : String(productDetail.type_buffet),
             })
             setEditorValue(productDetail.description);
             setFileList([{
@@ -167,8 +167,8 @@ const ModalEditProduct = (props) => {
         </Form.Item>
         <Form.Item name='type_buffet' label="Loại Buffet" rules={[{ required: true , message: 'Vui lòng chọn loại buffet mà mình muốn !!!' }]} >
           <Select>
-            <Select.Option value="1">1 - Buffet Thường</Select.Option>
-            <Select.Option value="2">2 - Buffet Vip</Select.Option>
+            <Select.Option value="1" key={1}>1 - Buffet Thường</Select.Option>
+            <Select.Option value="2" key={2}>2 - Buffet Vip</Select.Option>
           </Select>
         </Form.Item>
         

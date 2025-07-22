@@ -137,6 +137,7 @@ const getAllStaffApi = async () => {
 
 // find staff
 const findStaffApiByID = async (id) => {
+    // console.log('ccc    ')
     const backendURL = `/api/v1/admin/staff/${id}`;
     const rs = await axios.get(backendURL);
     return rs;
@@ -173,12 +174,290 @@ const updateStaffApi = async (data) => {
     return rs;
 }
 
+// upload ảnh thay ảnh đại diện
+const changeImageStaffApi = async (data, id) => {
 
-// lấy hình ảnh của nhân viên 
-// const getImageStaffApi = async (id) => {
-//     const backendURL = `/api/v1/admin/avatar-staff/${id}`;
-//     const rs = await axios.get(backendURL);
-//     return rs;
+    const backendURL = `/api/v1/admin/avatar-staff/${id}`;
+
+    // const username = formData.get("username");
+
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
+
+    const rs = axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+// role
+
+const getRoleApi = async () => {
+    const backendURL = '/api/v1/admin/role';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const saveRoleApi = async (data) => {
+    const backendURL = `/api/v1/admin/role`;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+const deleteRoleApi = async (id) => {
+    const backendURL = `/api/v1/admin/role/${id}`;
+    const rs = await axios.delete(backendURL);
+    return rs;
+}
+
+const findRoleApi = async (id) => {
+    const backendURL = `/api/v1/admin/role/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+const updateRoleApi = async (data) => {
+    const backendURL = `/api/v1/admin/role`;
+
+    const rs = await axios.put(backendURL, data, { headers: { 'Content-Type': 'application/json' } });
+
+    return rs;
+}
+
+
+
+// ward
+const getWardApi = async () => {
+    const backendURL = '/api/v1/admin/ward';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const findWardApi = async (id) => {
+    const backendURL = `/api/v1/admin/ward/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const findWardByDistrict = async (district_id) => {
+    const backendURL = `/api/v1/admin/ward-by-district/${district_id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+// district 
+const getDistrictApi = async () => {
+    const backendURL = '/api/v1/admin/district';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+const getDistrictByProvince = async (id_province) => {
+    const backendURL = `/api/v1/admin/district-by-province/${id_province}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const findDistrict = async () => {
+    const backendURL = `/api/v1/admin/district-by-province/${id_province}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+// province 
+const getProvinceApi = async () => {
+    const backendURL = '/api/v1/admin/province';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+const findProvinceApi = async () => {
+    const backendURL = '/api/v1/admin/province/:id';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+// action
+const getActionApi = async () => {
+    const backendURL = '/api/v1/admin/action';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+// permission
+const getPermissionApi = async (id_role) => {
+    // console.log('api ', id_role)
+    const backendURL = `/api/v1/admin/permission/${id_role}`;
+    const rs = await axios.get(backendURL);
+    const arrPermission = [];
+    rs.data.forEach(row => {
+        arrPermission.push(row.id);
+    })
+    return arrPermission;
+}
+
+const savePermissionApi = async (data) => {
+    const backendURL = `/api/v1/admin/permission`;
+    const rs = await axios.post(backendURL, data, { headers: { 'Content-Type': 'application/json' } });
+    return rs;
+}
+
+// floor
+const getFloorApi = async () => {
+    const backendURL = '/api/v1/admin/floor';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const saveFloorApi = async (data) => {
+    const backendURL = '/api/v1/admin/floor';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+const deleteFloorApi = async (id) => {
+    const backendURL = `/api/v1/admin/floor/${id}`;
+    const rs = await axios.delete(backendURL);
+    return rs;
+}
+
+const updateFloorApi = async (data) => {
+    const backendURL = `/api/v1/admin/floor`;
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const rs = await axios.put(backendURL, data, config);
+    return rs;
+}
+
+const findFloorApi = async (id) => {
+    const backendURL = `/api/v1/admin/floor/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+// table
+
+const findTableApi = async (id) => {
+    const backendURL = `/api/v1/admin/table/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const getTableApi = async () => {
+    const backendURL = '/api/v1/admin/table';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+const saveTableApi = async (data) => {
+    const backendURL = '/api/v1/admin/table';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+const updateTableApi = async (data) => {
+    const backendURL = '/api/v1/admin/table';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const rs = await axios.put(backendURL, data, config);
+    return rs;
+}
+
+
+const deleteTableApi = async (id) => {
+    const backendURL = `/api/v1/admin/table/${id}`;
+    const rs = await axios.delete(backendURL);
+    return rs;
+}
+
+// reservation
+const getReservationApi = async () => {
+    const backendURL = '/api/v1/admin/reservation';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+const findReservationApi = async (id) => {
+    const backendURL = `/api/v1/admin/reservation/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const saveReservationApi = async (data) => {
+    const backendURL = '/api/v1/admin/reservation';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+const updateReservationApi = async (data) => {
+    const backendURL = '/api/v1/admin/reservation';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const rs = await axios.put(backendURL, data, config);
+    return rs;
+}
+
+const deleteReservationApi = async (id) => {
+    const backendURL = `/api/v1/admin/reservation/${id}`;
+    const rs = await axios.delete(backendURL);
+    return rs;
+}
+
+
+// customer
+
+const getCustomerApi = async () => {
+    const backendURL = '/api/v1/admin/customer';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+// const saveCustomerApi = async () => {
+//     const backendURL = '/api/v1/admin/customer';
+//     const rs = await axios.post(const backendURL = '/api/v1/admin/customer';)
 // }
 
-export { getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getImageStaffApi }
+
+export { findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi } 
