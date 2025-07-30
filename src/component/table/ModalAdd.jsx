@@ -1,9 +1,10 @@
 import { Modal , Form , Input, Button , notification, Select , Upload  } from "antd";
 import { openNotificationSuccess , openNotificationError } from "../notification/NotificaComponent";
 import { saveTableApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const ModalAddTable = (props) => {
-
+ const navigate = useNavigate();
     const { isModalAddTableOpen , handleCancleModalAdd , loadingData , listFloor } = props
 
     const [form] = Form.useForm();
@@ -13,6 +14,9 @@ const ModalAddTable = (props) => {
     const onFinish = async (values) => {
         const dataJSON  = JSON.stringify(values)
         const rs = await saveTableApi(dataJSON);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             loadingData();
             handleCancleModalAdd();

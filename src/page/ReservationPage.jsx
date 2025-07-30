@@ -1,12 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm , Drawer  } from 'antd';
+import {  Table , Flex, Button  , message, Popconfirm , Drawer  } from 'antd';
 import { useEffect, useState } from 'react';
-import { findReservationApi, getAllStaffApi, getCustomerApi, getReservationApi, getTableApi } from '../service/api.service';
+import { deleteReservationApi, findReservationApi, getAllStaffApi, getCustomerApi, getReservationApi, getTableApi } from '../service/api.service';
 import ModalAddReservation from '../component/reservation/ModalAdd';
 import ModalEditReservation from '../component/reservation/ModalEdit';
 import ReservationDetail from '../component/reservation/DrawerReservation';
-
+import { useNavigate } from 'react-router-dom';
 
 const ReservationPage = () => {
+     const navigate = useNavigate();
     const [open, setOpen] = useState(false); // để mở drawer
     const [ listReservation , setListReservation ] = useState([]);
     const [reservationDetail , setReservation] = useState(null);
@@ -32,15 +33,23 @@ const ReservationPage = () => {
     };
 
     const confirm = async e => {
-        message.success(rs.data.message);
-        // const rs = await deleteProductApi(e);
-        // if(rs.status == 201) {
-        //     message.success(rs.data.message);
-        //     loadingData();
-        // }
-        // else {
-        //     message.error(rs.data.message);
-        // }
+        // message.success(rs.data.message);
+        const rs = await deleteReservationApi(e);
+
+        console.log(rs)
+
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 201) {
+            message.success(rs.data.message);
+            loadingData();
+        }
+
+        else {
+            message.error(rs.data.message);
+        }
     };
 
     const cancel = e => {
@@ -90,6 +99,9 @@ const ReservationPage = () => {
             <Button color="cyan" onClick={async () => {
                 // showModalEditCategory(record.id);
                 const pro = await findReservationApi(record.id);
+                if(pro.status == 405) {
+                    navigate('/admin/login');
+                }
                 setModalEditOpen(true);
                 setReservation(pro.data);
                 }}  variant="solid">
@@ -120,6 +132,39 @@ const ReservationPage = () => {
         const rs1 = await getCustomerApi();
         const rs2 = await getAllStaffApi();
         const rs3 = await getTableApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs1.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs2.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs3.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
+
+        if(rs1.status == 403) {
+            navigate('/admin' , { state : { message : rs1.data.message } });
+        }
+
+        if(rs2.status == 403) {
+            navigate('/admin' , { state : { message : rs2.data.message } });
+        }
+
+        if(rs3.status == 403) {
+            navigate('/admin' , { state : { message : rs3.data.message } });
+        }
+
+
         setListReservation(rs.data);
         setListCustomer(rs1.data);
         setListStaff(rs2.data);
@@ -138,6 +183,13 @@ const ReservationPage = () => {
 
     const handleOpenDrawer = async (id) => {
         const rs =  await findReservationApi(id);
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
         setReservation(rs.data);
         setOpen(true);
     }

@@ -15,9 +15,12 @@
     "antd": "^5.26.4",
     "antd-img-crop": "^4.25.0",
     "axios": "^1.10.0",
+    "formik": "^2.4.6",
+    "jwt-decode": "^4.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "^7.6.3"
+    "react-router-dom": "^7.6.3",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

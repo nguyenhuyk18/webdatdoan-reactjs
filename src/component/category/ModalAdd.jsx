@@ -2,9 +2,10 @@ import { Modal , Form , Input, Button , notification  } from "antd"
 import { saveCategoryApi } from "../../service/api.service";
 import { useMemo, useState } from "react";
 import { CheckOutlined, CloseOutlined, SmileOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
 
 const ModalAddCategory = (props) => {
-    
+    const navigate = useNavigate();
     const {loadingData ,  handleAddCancel , isModalAddOpen } = props;
 
     const [form] = Form.useForm();
@@ -32,7 +33,9 @@ const ModalAddCategory = (props) => {
         const data = JSON.stringify(values);
 
         const rs = await saveCategoryApi(data);
-
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
         // console.log(rs)
 
         if(rs.status == 201) {

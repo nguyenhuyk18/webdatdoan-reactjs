@@ -6,9 +6,11 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './style.css'
 import { saveProductApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 
 const ModalAddProduct = (props) => {
+  const navigate = useNavigate();
     // upload ant design
     const  __awaiter = (this && this.__awaiter) ||
   function (thisArg, _arguments, P, generator) {
@@ -98,15 +100,25 @@ const ModalAddProduct = (props) => {
         
 
         const rs = await saveProductApi(data);
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
+
+
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message, 'Thêm Sản Phẩm' , api);
             form.resetFields();
             loadingData();
             handleCancleModalAdd();
-            setFileList([])
+            setFileList([]);
+            setEditorValue('')
         }
         else {
             openNotificationError(rs.data.message, 'Thêm Sản Phẩm' , api);
+            handleCancleModalAdd();
+            form.resetFields();
+            setFileList([]);
+            setEditorValue('');
         }
 
     }

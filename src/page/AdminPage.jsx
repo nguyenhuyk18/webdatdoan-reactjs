@@ -1,81 +1,149 @@
-import React from 'react';
-import { BorderHorizontalOutlined, BorderOuterOutlined, CarryOutOutlined, CodepenOutlined, DashboardOutlined, DropboxOutlined, InteractionOutlined, ProductOutlined, TabletOutlined, UploadOutlined, UserAddOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import  { useEffect, useState } from 'react';
+import { BorderHorizontalOutlined, BorderOuterOutlined, CarryOutOutlined, CodepenOutlined, CustomerServiceOutlined, DashboardOutlined, DropboxOutlined, InteractionOutlined, ProductOutlined, TabletOutlined, UserAddOutlined , DownOutlined , SettingOutlined  } from '@ant-design/icons';
+import {Avatar ,Button, Flex, Layout, Menu, theme , Dropdown, Space  } from 'antd';
 import '../assets/Admin.css'
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { jwtDecode } from "jwt-decode";
+import logo from '../assets/img/pngtree-pizza-restaurant-logo-design-template-premium-vector-png-image_5435494.jpg'
 const { Header, Content, Footer, Sider } = Layout;
 
 
-const items = [
-  {
-    label : <Link to={'/admin'} >Trang Chủ</Link>,
-    icon : <DashboardOutlined />,
-    key : 'Dashboard',
-    path : '/admin'
-  },
-  {
-    label : <Link to={'/admin/category'} >Danh Mục</Link>,
-    icon : <DropboxOutlined />,
-    key : 'Category',
-    path : '/admin/category'
-  },
-  {
-    label : <Link to={'/admin/brand'} >Thương Hiệu</Link>,
-    icon : <CodepenOutlined />,
-    key : 'Brand',
-    path : '/admin/brand'
-  },
-  {
-    label : <Link to={'/admin/product'} >Sản Phẩm</Link>,
-    icon : <ProductOutlined />,
-    key : 'Product',
-    path : '/admin/product'
-  },
-  {
-    label : <Link to={'/admin/staff'} >Nhân Viên</Link>,
-    icon : <UserAddOutlined />,
-    key : 'Staff',
-    path : '/admin/staff'
-  },
-  {
-    label : <Link to={'/admin/role'} >Vai Trò</Link>,
-    icon : <CarryOutOutlined />,
-    key : 'Role',
-    path : '/admin/role'
-  },
-
-  {
-    label : <Link to={'/admin/action'} >Các Tác Vụ</Link>,
-    icon : <InteractionOutlined />,
-    key : 'Action',
-    path : '/admin/action'
-  },
 
 
-  {
-    label : <Link to={'/admin/floor'} >Tầng Nhà Hàng</Link>,
-    icon : <BorderOuterOutlined />,
-    key : 'Floor',
-    path : '/admin/floor'
-  },
-
-  {
-    label : <Link to={'/admin/table'} >Quản Lý Bàn</Link>,
-    icon : <TabletOutlined />,
-    key : 'Table',
-    path : '/admin/table'
-  },
-
-  {
-    label : <Link to={'/admin/reservation'} >Quản Lý Đặt Chỗ</Link>,
-    icon : <BorderHorizontalOutlined />,
-    key : 'Reservation',
-    path : '/admin/reservation'
-  }
-
-];
 
 const AdminPage = () => {
+  const navigate = useNavigate();
+  const [displayLoading , setDisplayLoading] = useState(false);
+  const [imageAvatar , setImageAvatar] = useState(null);
+  const [nameStaff , setNameStaff] = useState(null);
+
+  useEffect(() => {
+
+    const jwtAccess = localStorage.getItem('login');
+
+    // const token = "eyJ0eXAiO.../// jwt token";
+    const decoded = jwtDecode(jwtAccess);
+
+    // console.log(decoded);
+    setImageAvatar(`${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/avatar-staff/${decoded.id}`);
+    setNameStaff(decoded.fullname);
+  } , [])
+
+
+    const handleDisplayLoading = () => {
+      setDisplayLoading(true);
+      setTimeout(() => {
+        setDisplayLoading(false);
+      } , 700);
+    }
+
+    useEffect(() => {
+      handleDisplayLoading();
+    } , [])
+
+    const items = [
+    {
+      label : <Link to={'/admin'} onClick={ handleDisplayLoading } >Trang Chủ</Link>,
+      icon : <DashboardOutlined />,
+      key : 'Dashboard',
+      path : '/admin'
+    },
+    {
+      label : <Link to={'/admin/category'} onClick={ handleDisplayLoading } >Danh Mục</Link>,
+      icon : <DropboxOutlined />,
+      key : 'Category',
+      path : '/admin/category'
+    },
+    {
+      label : <Link to={'/admin/brand'} onClick={ handleDisplayLoading } >Thương Hiệu</Link>,
+      icon : <CodepenOutlined />,
+      key : 'Brand',
+      path : '/admin/brand'
+    },
+    {
+      label : <Link to={'/admin/product'} onClick={ handleDisplayLoading } >Sản Phẩm</Link>,
+      icon : <ProductOutlined />,
+      key : 'Product',
+      path : '/admin/product'
+    },
+    {
+      label : <Link to={'/admin/staff'} onClick={ handleDisplayLoading } >Nhân Viên</Link>,
+      icon : <UserAddOutlined />,
+      key : 'Staff',
+      path : '/admin/staff'
+    },
+    {
+      label : <Link to={'/admin/role'} onClick={ handleDisplayLoading } >Vai Trò</Link>,
+      icon : <CarryOutOutlined />,
+      key : 'Role',
+      path : '/admin/role'
+    },
+
+    {
+      label : <Link to={'/admin/action'} onClick={ handleDisplayLoading } >Các Tác Vụ</Link>,
+      icon : <InteractionOutlined />,
+      key : 'Action',
+      path : '/admin/action'
+    },
+
+
+    {
+      label : <Link to={'/admin/floor'} onClick={ handleDisplayLoading } >Tầng Nhà Hàng</Link>,
+      icon : <BorderOuterOutlined />,
+      key : 'Floor',
+      path : '/admin/floor'
+    },
+
+    {
+      label : <Link to={'/admin/table'} onClick={ handleDisplayLoading } >Quản Lý Bàn</Link>,
+      icon : <TabletOutlined />,
+      key : 'Table',
+      path : '/admin/table'
+    },
+
+    {
+      label : <Link to={'/admin/reservation'} onClick={ handleDisplayLoading } >Quản Lý Đặt Chỗ</Link>,
+      icon : <BorderHorizontalOutlined />,
+      key : 'Reservation',
+      path : '/admin/reservation'
+    },
+
+
+    {
+      label : <Link to={'/admin/customer'} onClick={ handleDisplayLoading } >Quản Lý Khách Hàng</Link>,
+      icon : <CustomerServiceOutlined />,
+      key : 'Customer',
+      path : '/admin/customer'
+    }
+
+  ];
+
+
+  const items1 = [
+    {
+      key: '1',
+      label: 'Tài Khoản Của Tôi',
+      disabled: true,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: '2',
+      label: 'Thông Tin Của Tôi',
+    },
+    {
+      key: '4',
+      label: (
+        <a onClick={() => {
+          localStorage.clear();
+          navigate('/admin/login');
+        }} >Đăng Xuất</a>                   
+      ) ,
+    }
+  ];
 
   // lấy thông tin path hiện tại truy xuất đến pathname sẽ in ra path của bạn
   const currentPath = useLocation();
@@ -115,14 +183,26 @@ const AdminPage = () => {
           }} >
 
             
-          <div style={{ color: '#000', fontSize: '18px' }}>Ứng dụng của tôi</div>
+          <div style={{ color: '#000', fontSize: '18px' , width: '40px' , height : '40px' }}>
+            <img src={logo} style={{ width : '100%' , height : '100%' }} alt="" />
+          </div>
           
           
-          <div>
-            <Button type="primary" style={{ marginRight: '8px' }}>
-              Hành động 1
-            </Button>
-            <Button>Hành động 2</Button>
+          <div style={{display : 'flex' , justifyContent: 'space-between' , alignItems : 'center'}} >
+            { nameStaff ? 
+            <Dropdown menu={{ items : items1 }}>
+                <span style={{ marginRight : '10px' }} >      
+                  <Space>
+                  {nameStaff}
+                  <DownOutlined />
+                </Space>
+                </span> 
+            </Dropdown>
+            
+            : 
+            '' }
+            { imageAvatar ?  <Avatar  size="large" src={imageAvatar} /> :  <Avatar  size="large" src="https://i.pravatar.cc/150?img=3" />     } 
+            
           </div>
           </Header>
         <Content style={{ margin: '24px 16px 0px'}}>
@@ -135,7 +215,12 @@ const AdminPage = () => {
               minHeight: 'calc(100vh - 64px - 65px)'
             }}
           >
-            <Outlet/>
+
+            { displayLoading == true ? <Flex justify='center' align='center'>
+              <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+            </Flex>  :   ''  } 
+            { displayLoading == false ? <Outlet/> : '' }
+            {/* <Outlet/>  */}
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

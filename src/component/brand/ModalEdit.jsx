@@ -2,34 +2,32 @@ import { Modal , Form , Input, Button , notification } from 'antd';
 import { useEffect, useState } from "react";
 import { updateBrandApi } from '../../service/api.service';
 import { openNotificationSuccess , openNotificationError } from '../notification/NotificaComponent';
+import { useNavigate } from 'react-router-dom';
 
 const ModalEditBrand = (props) => {
-
+    const navigate = useNavigate();
     const { isModalEditOpen , handleCancleEdit , loadingData , dataEdit } = props;
 
     const [api, contextHolder] = notification.useNotification();
     const [form] = Form.useForm();
 
     useEffect(() => {
+
         if(dataEdit) {
             form.setFieldsValue({
                 id: dataEdit.id,
                 name_brand: dataEdit.name_brand,
             });
         }
-        else {
-            form.resetFields();
-        }
     } , [dataEdit])
-
-    form.setFieldValue({
-        id : '2323',
-        name_brand : '2323',
-    })
 
     const onFinish = async (values) => {
         const dataJson = JSON.stringify(values);
         const rs = await updateBrandApi(dataJson);
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        
         if( rs.status == 201 ) {
             loadingData();
             form.resetFields();

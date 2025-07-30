@@ -1,10 +1,11 @@
 import { Modal , Form , Input, Button , notification, Select , Upload  } from "antd";
 import { openNotificationSuccess , openNotificationError } from "../notification/NotificaComponent";
 import { saveStaffApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 // import ImgCrop from "antd-img-crop";
 
 const ModalAddStaff = (props) => {
-
+ const navigate = useNavigate();
     const [api , contextHolder] = notification.useNotification();
 
     const {  loadingData ,  isModaAddStaffOpen , handleCancleModalAdd , listRole } = props;
@@ -16,6 +17,9 @@ const ModalAddStaff = (props) => {
     const onFinish = async (values) => {
         const dataJSON = JSON.stringify(values);
         const rs = await saveStaffApi(dataJSON);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message  , 'Thêm Nhân Viên' , api);
             handleCancleModalAdd();

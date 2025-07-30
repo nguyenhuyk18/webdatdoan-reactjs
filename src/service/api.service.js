@@ -5,7 +5,6 @@ import axios from './api.setting';
 const getAllCategory = async () => {
     const backendURL = '/api/v1/admin/category';
     const rs = await axios.get(backendURL);
-    // console.log(rs)
     return rs;
 }
 
@@ -79,6 +78,14 @@ const deleteBrandApi = async (id) => {
 
 
 // product
+
+const getProductClient = async () => {
+    const backendURL = '/api/v1/client/product';
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
 // getAll Product
 const getProductApi = async () => {
     const backendURL = '/api/v1/admin/product';
@@ -267,8 +274,8 @@ const getDistrictByProvince = async (id_province) => {
     return rs;
 }
 
-const findDistrict = async () => {
-    const backendURL = `/api/v1/admin/district-by-province/${id_province}`;
+const findDistrict = async (id) => {
+    const backendURL = `/api/v1/admin/district/${id}`;
     const rs = await axios.get(backendURL);
     return rs;
 }
@@ -281,8 +288,8 @@ const getProvinceApi = async () => {
 }
 
 
-const findProvinceApi = async () => {
-    const backendURL = '/api/v1/admin/province/:id';
+const findProvinceApi = async (id) => {
+    const backendURL = `/api/v1/admin/province/${id}`;
     const rs = await axios.get(backendURL);
     return rs;
 }
@@ -302,6 +309,11 @@ const getPermissionApi = async (id_role) => {
     const backendURL = `/api/v1/admin/permission/${id_role}`;
     const rs = await axios.get(backendURL);
     const arrPermission = [];
+
+    if (rs.status == 403) {
+        return rs;
+    }
+
     rs.data.forEach(row => {
         arrPermission.push(row.id);
     })
@@ -454,10 +466,68 @@ const getCustomerApi = async () => {
     return rs;
 }
 
-// const saveCustomerApi = async () => {
-//     const backendURL = '/api/v1/admin/customer';
-//     const rs = await axios.post(const backendURL = '/api/v1/admin/customer';)
-// }
+const findCustomerApi = async (id) => {
+    const backendURL = `/api/v1/admin/customer/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+const saveCustomerApi = async (data) => {
+    const backendURL = '/api/v1/admin/customer';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+const updateCustomerApi = async (data) => {
+    const backendURL = '/api/v1/admin/customer';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const rs = await axios.put(backendURL, data, config);
+    return rs;
+}
 
 
-export { findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi } 
+const deleteCustomerApi = async (id) => {
+    const backendURL = `/api/v1/admin/customer/${id}`;
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+// login to admin
+const loginToAdmin = async (data) => {
+    const backendURL = '/api/v1/admin/login';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+// login to call food hẹ hẹ
+const loginToCallFood = async (data) => {
+    const backendURL = '/api/v1/call-food'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+export { loginToCallFood, findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi, deleteCustomerApi, saveCustomerApi, findCustomerApi, updateCustomerApi, loginToAdmin, getProductClient } 

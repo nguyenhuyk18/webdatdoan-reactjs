@@ -4,10 +4,11 @@ import { openNotificationSuccess , openNotificationError } from "../notification
 import ImgCrop from "antd-img-crop";
 import { useEffect, useState } from "react";
 import { changeImageStaffApi, updateStaffApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 
 const ModalChangeImage = (props) => {
-
+ const navigate = useNavigate();
     const [form] = Form.useForm();
     const [api , contextHolder] = notification.useNotification(); 
 
@@ -96,6 +97,9 @@ const ModalChangeImage = (props) => {
 
 
         const rs = await changeImageStaffApi(data , values.id);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
 
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Thay Ảnh Đại Diện' , api);

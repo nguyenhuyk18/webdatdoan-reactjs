@@ -2,9 +2,11 @@ import { Modal , Form , Input, Button , notification  } from "antd"
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { use, useEffect, useState } from "react";
 import { updateCategoryApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
+import { openNotificationError , openNotificationSuccess } from '../notification/NotificaComponent'
 
 const ModalEditCategory = (props) => {
-
+    const navigate = useNavigate();
     const [dataEdit, setDataEdit] = useState();
     const {loadingData , isModalEditOpen  , handleEditCancle , dataEditCategory } = props;
     const [form] = Form.useForm();
@@ -12,15 +14,16 @@ const ModalEditCategory = (props) => {
     
 
     useEffect(() => {
+        // console.log(dataEditCategory);
         if(dataEditCategory) {
             form.setFieldsValue({
                 id : dataEditCategory.id,
                 name_category: dataEditCategory.name_category,
             });
-            setDataEdit(dataEdit)
+            setDataEdit(dataEditCategory);
         }
         else {
-            form.resetFields();
+            // form.resetFields();
             setDataEdit(null)
         }
     }, [dataEditCategory])
@@ -32,35 +35,23 @@ const ModalEditCategory = (props) => {
 
         const rs = await updateCategoryApi(dataJson);
 
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
         if(rs.status == 201) {
-            openNotificationSuccess(rs.data.message);
+            openNotificationSuccess(rs.data.message , 'Sửa Danh Mục' , api);
             loadingData();
             handleEditCancle();
             form.resetFields();
         }
         else {
-            openNotificationError(rs.data.message);
+            openNotificationError(rs.data.message , 'Sửa Danh Mục' ,  api);
             handleEditCancle();
             form.resetFields();
         }
     }
 
-    const openNotificationSuccess = (descrip) => {
-        api.open({
-            message: 'Cập Nhật Danh Mục',
-            description: descrip,
-            icon: <CheckOutlined />,
-        });
-    };
-
-
-    const openNotificationError = (descrip) => {
-        api.open({
-            message: 'Cập Nhật Danh Mục',
-            description: descrip,
-            icon: <CloseOutlined /> ,
-        });
-    };
 
     return (
         <>

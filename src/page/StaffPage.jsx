@@ -1,12 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm , Drawer , Badge  } from 'antd';
+import {  Table, Flex, Button  , message, Popconfirm } from 'antd';
 import { useEffect, useState } from 'react';
 import { deleteStaffApi, findStaffApiByID, getAllStaffApi, getRoleApi } from '../service/api.service';
 import StaffDetail from '../component/staff/StaffDetail';
 import ModalAddStaff from '../component/staff/ModalAdd';
 import ModalEditStaff from '../component/staff/ModalEdit';
 import ModalChangeImage from '../component/staff/ModalChangeImage';
-
+import { useNavigate } from 'react-router-dom';
 const StaffPage = () => {
+     const navigate = useNavigate();
     const [listStaff , setStaffList] = useState([]);
     const [open , setOpen] = useState(false);
     const [staffDetail , setStaffDetail] = useState(null);
@@ -18,6 +19,11 @@ const StaffPage = () => {
 
     const confirm = async e => {
         const rs = await deleteStaffApi(e);
+
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
         if(rs.status == 201) {
             message.success(rs.data.message);
             loadingData();
@@ -108,6 +114,9 @@ const StaffPage = () => {
             <Button color="purple"  variant="solid" onClick={async () => {
                 setModalChangeImageOpen(true);
                 const rs = await findStaffApiByID(record.id);
+                        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
                 setStaffDetail(rs.data);
                 }}>
                 Thay Ảnh
@@ -122,11 +131,24 @@ const StaffPage = () => {
     // call api
     const loadingData =  async () => {
         const rs = await getAllStaffApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin'  , {state : { message : rs.data.message }} );
+        }
         setStaffList(rs.data);
     }
 
     const loadingRole = async () => {
         const rs = await getRoleApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        if(rs.status == 403) {
+            navigate('/admin'  , {state : { message : rs.data.message }} );
+        }
         setRole(rs.data);
     }
 

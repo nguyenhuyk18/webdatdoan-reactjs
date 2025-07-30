@@ -2,10 +2,11 @@ import { Modal , Form , Input, Button , notification, Select  } from "antd";
 import { openNotificationSuccess , openNotificationError } from "../notification/NotificaComponent";
 import { useEffect } from "react";
 import { updateStaffApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 
 const ModalEditStaff = (props) => {
-
+ const navigate = useNavigate();
     const [form] = Form.useForm();
     const [api , contextHolder] = notification.useNotification(); 
     const { staffDetail ,  loadingData ,  isModalEditStaffOpen , handleCancleModalEdit , listRole } = props;
@@ -31,6 +32,9 @@ const ModalEditStaff = (props) => {
         const dataJson = JSON.stringify(values);
         // console.log(dataJson);
         const rs = await updateStaffApi(dataJson);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Thêm Nhân Viên' , api);
             loadingData();

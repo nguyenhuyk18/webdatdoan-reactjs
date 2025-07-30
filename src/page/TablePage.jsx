@@ -1,12 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm , Drawer , Badge  } from 'antd';
+import {  Table , Flex, Button  , message, Popconfirm   } from 'antd';
 import { useEffect, useState } from 'react';
 import { deleteTableApi, findTableApi, getFloorApi, getTableApi } from '../service/api.service';
 import ModalAddTable from '../component/table/ModalAdd';
 import ModalEditTable from '../component/table/ModalEdit';
-
+import { useNavigate } from 'react-router-dom';
 
 const TablePage = () => {
-    const [listTable , setListTable] = useState(null);
+     const navigate = useNavigate();
+    const [listTable , setListTable] = useState([]);
     const [tableDetail , setTableDetail] = useState(null);
     const [listFloor , setListFloor] = useState(null);
     const [isModalAddTableOpen , setModalAddTableOpen] = useState(false);
@@ -37,6 +38,20 @@ const TablePage = () => {
     const loadingData = async () => {
         const rs = await getTableApi();
         const rsFloor = await getFloorApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        if(rsFloor.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , {state : { message : rs.data.message  }});
+        }
+
+        if(rsFloor.status == 403) {
+             navigate('/admin' , {state : { message : rsFloor.data.message  }});
+        }
         setListTable(rs.data);
         setListFloor(rsFloor.data);
     }
@@ -77,6 +92,9 @@ const TablePage = () => {
             <Button color="cyan"  variant="solid" onClick={
                 async () => {
                     const rs = await findTableApi(record.id);
+                            if(rs.status == 405) {
+            navigate('/admin/login');
+        }
                     setModalEditTableOpen(true);
                     setTableDetail(rs.data);
                 }   

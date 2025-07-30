@@ -1,12 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm  } from 'antd';
+import { Table,  Flex, Button  , message, Popconfirm  } from 'antd';
 import { deleteBrandApi, getAllBrandApi } from '../service/api.service';
 import { useEffect, useState } from 'react';
 import ModalAddBrand from '../component/brand/ModalAdd';
 import ModalEditBrand from '../component/brand/ModalEdit';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const BrandPage = () => {
+    const navigate = useNavigate();
     // Các state hook
     const [listBrand , setListBrand] = useState([]);
     const [isModalAddOpen, setIsModalAddOpen] = useState(false);
@@ -21,7 +22,12 @@ const BrandPage = () => {
     // Tác Vụ Xóa Dữ Liệu 
     const confirm = async e => {
         const rs = await deleteBrandApi(e);
-        console.log(rs.status)
+        // console.log(rs.status);
+
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
+
         if(rs.status == 201) {
             message.success('Xóa thành công !!!');
             loadingData();
@@ -37,16 +43,21 @@ const BrandPage = () => {
 
     };
 
-    // Call API
     const loadingData  = async () => {
         const rs = await getAllBrandApi();
-        // console.log(rs)
+        console.log('brand' , rs)
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
+
         setListBrand(rs.data);
     }
-    // console.log(listBrand);
 
 
-    // edit modal
     const handleCancelAdd = () => {
         setIsModalAddOpen(false);
     }

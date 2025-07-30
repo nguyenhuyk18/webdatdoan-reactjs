@@ -2,9 +2,11 @@ import { Modal , Form , Input, Button , notification  } from "antd";
 import { CheckOutlined, CloseOutlined, SmileOutlined } from '@ant-design/icons';
 import { saveRoleApi } from "../../service/api.service";
 import { openNotificationSuccess , openNotificationError } from '../notification/NotificaComponent'
+import { useNavigate } from "react-router-dom";
 
 
 const ModalAddRole = (props) => {
+     const navigate = useNavigate();
     const {handleCancleAddRole , isModalAddRoleOpen ,  loadingData} = props;
 
     const [api, contextHolder] = notification.useNotification();
@@ -14,6 +16,9 @@ const ModalAddRole = (props) => {
     const onFinish = async (values) => {
         const dataJSON = JSON.stringify(values);
         const rs = await saveRoleApi(dataJSON);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
 
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Thêm Vai Trò' , api);

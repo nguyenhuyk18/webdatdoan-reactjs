@@ -1,8 +1,12 @@
 import { Modal , Form , Input, Button , notification  } from "antd";
 import { saveBrandApi } from "../../service/api.service";
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
+import { openNotificationError, openNotificationSuccess } from "../notification/NotificaComponent";
+// useNavigate
 
 const ModalAddBrand = (props) => {
+    const navigate = useNavigate();
 
     const [form] = Form.useForm();
 
@@ -14,36 +18,25 @@ const ModalAddBrand = (props) => {
         const dataJson = JSON.stringify(values);
         const rs = await saveBrandApi(dataJson);
 
+        
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        
         if(rs.status == 201) {
-            openNotificationSuccess(rs.data.message);
+            openNotificationSuccess( rs.data.message , 'Thêm Thương Hiệu' , api);
             loadingData();
             handleCancelAdd();
             form.resetFields();
             
         }
         else {
-            openNotificationError(rs.data.message);
+            openNotificationError( rs.data.message , 'Thêm Thương Hiệu' , api);
             form.resetFields();
             handleCancelAdd();
         }
     }
 
-    const openNotificationSuccess = (descrip) => {
-        api.open({
-        message: 'Thêm Thương Hiệu Thành Công',
-        description: descrip,
-        icon: < CheckOutlined  />,
-        });
-    };
-
-
-    const openNotificationError = (descrip) => {
-        api.open({
-        message: 'Thêm Thương Hiệu Thất Bại',
-        description: descrip,
-        icon: <CloseOutlined /> ,
-        });
-    };
 
     return (
         <>

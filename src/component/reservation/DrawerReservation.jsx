@@ -1,7 +1,10 @@
 import {  Drawer, Image } from 'antd';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ReservationDetail = (props) => {
+  const navigate = useNavigate();
+
     const { reservationDetail , onClose , open , showDrawer } = props
 
 

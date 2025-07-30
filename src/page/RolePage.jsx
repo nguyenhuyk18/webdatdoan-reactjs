@@ -1,12 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm  } from 'antd';
+import {  Table , Flex, Button  , message, Popconfirm  } from 'antd';
 import { useEffect, useState } from 'react';
 import { deleteRoleApi, findRoleApi, getActionApi, getPermissionApi, getRoleApi } from '../service/api.service';
 import ModalAddRole from '../component/role/ModallAdd';
 import ModalEditRole from '../component/role/ModalEdit';
 import ModalPermission from '../component/role/ModalPermission';
-
+import { useNavigate } from 'react-router-dom';
 
 const RolePage = () => {
+     const navigate = useNavigate();
     const [roleList , setRoleList] = useState([]);
     const [isModalAddRoleOpen , setModalAddRoleOpen] = useState(false);
     const [isModalEditOpen , setModalEditOpen] = useState(false);
@@ -23,6 +24,10 @@ const RolePage = () => {
 
     const confirm = async e => {
         const rs = await deleteRoleApi(e);
+
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
     
         if(rs.status == 201) {
             message.success(rs.data.message);
@@ -64,6 +69,9 @@ const RolePage = () => {
                 const roleDet = await findRoleApi(record.id)
 
                 console.log(rs2);
+                if(rs2.data?.message) {
+                    navigate('/admin' , { state : { message : 'Bạn không có thẩm quyền để vào trang này' } } );
+                }
 
                 setActionRoleHas(rs2);
                 setAllAction(rs1.data);
@@ -76,6 +84,9 @@ const RolePage = () => {
             <Button color="cyan" onClick={async () => {
 
                 const rs = await findRoleApi(record.id);
+                        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
                 setRoleDetail(rs.data);
                 setModalEditOpen(true);
 
@@ -106,6 +117,12 @@ const RolePage = () => {
     // call api
     const loadingData = async () => {
         const rs = await getRoleApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
         setRoleList(rs.data);
 
     }

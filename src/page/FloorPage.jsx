@@ -1,10 +1,11 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm  } from 'antd';
+import {  Table,  Flex, Button  , message, Popconfirm  } from 'antd';
 import { useEffect, useState } from 'react';
 import { deleteFloorApi, findFloorApi, getFloorApi } from '../service/api.service';
 import ModalAddFloor from '../component/floor/ModalAdd';
 import ModalEditFloor from '../component/floor/ModalEdit';
-
+import { useNavigate } from 'react-router-dom';
 const FloorPage = () => {
+     const navigate = useNavigate();
     const [listFloor , setListFloor] = useState([]);
     const [isModalAddOpen , setModalAddOpen] = useState(false);
     const [isModalEditOpen , setModalEditOpen] = useState(false);
@@ -23,6 +24,11 @@ const FloorPage = () => {
             message.success('Xóa thành công !!!');
             loadingData();
         }
+
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
+
         else {
             message.error(rs.data.message);
         }
@@ -37,6 +43,14 @@ const FloorPage = () => {
 
     const loadingData = async () => {
         const rs = await getFloorApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
+
         setListFloor(rs.data);
     }
 
@@ -63,6 +77,9 @@ const FloorPage = () => {
             <Button color="cyan"  variant="solid" onClick={
                 async () => {
                     const rs = await findFloorApi(record.id);
+                    if(rs.status == 405) {
+                        navigate('/admin/login');
+                    }
                     setModalEditOpen(true);
                     setFloorDetail(rs.data);
                 }   

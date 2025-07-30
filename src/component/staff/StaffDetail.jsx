@@ -1,7 +1,8 @@
 import { Drawer, Image } from "antd";
+// import { useNavigate } from "react-router-dom";
 
 const StaffDetail = (props) => {
-
+//  const navigate = useNavigate();
     const { staffDetail ,  onCloseDrawer , open  } = props;
 
     return (

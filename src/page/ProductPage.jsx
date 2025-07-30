@@ -1,13 +1,13 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm , Drawer  } from 'antd';
+import {  Table , Flex, Button  , message, Popconfirm   } from 'antd';
 import { useEffect, useState } from 'react';
 import { deleteProductApi, findProductApi, getAllBrandApi, getAllCategory, getProductApi } from '../service/api.service';
 import ModalAddProduct from '../component/product/ModalAdd';
 import ProductDetail from '../component/product/DrawerProduct';
 import ModalEditProduct from '../component/product/ModalEdit';
 // import { Button,  } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
 const ProductPage = () => {
-
+     const navigate = useNavigate();
     // use State 
     const [listProduct , setProductList] = useState([]);
     const [isModalAddProductOpen , setModalAddProductOpen] = useState(false);
@@ -35,6 +35,9 @@ const ProductPage = () => {
 
     const confirm = async e => {
         const rs = await deleteProductApi(e);
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
         if(rs.status == 201) {
             message.success(rs.data.message);
             loadingData();
@@ -57,6 +60,26 @@ const ProductPage = () => {
         const rs = await getProductApi();
         const rs1 = await getAllCategory();
         const rs2 = await getAllBrandApi();
+        if(rs.status == 405) {
+            navigate('/admin/login');
+        }
+        if(rs1.status == 405) {
+            navigate('/admin/login');
+        }
+        if(rs2.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(rs.status == 403) {
+            navigate('/admin' , { state : { message : rs.data.message } });
+        }
+        if(rs1.status == 403) {
+            navigate('/admin' , { state : { message : rs1.data.message } });
+        }
+        if(rs2.status == 403) {
+            navigate('/admin' , { state : { message : rs2.data.message } });
+        }
+
         setProductList(rs.data);
         setListBrand(rs2.data);
         setListCategory(rs1.data);
@@ -79,6 +102,14 @@ const ProductPage = () => {
     const handleOpenDrawer = async (record) => {
         // console.log('mở con cặc')
         const pro = await findProductApi(record.id);
+        if(pro.status == 405) {
+            navigate('/admin/login');
+        }
+
+        if(pro.status == 403) {
+            navigate('/admin' , {state : {message : pro.data.message}});
+        }
+
         setProductDetail(pro.data);
         showDrawer();
     };
@@ -140,6 +171,9 @@ const ProductPage = () => {
             <Button color="cyan" onClick={async () => {
                 // showModalEditCategory(record.id);
                 const pro = await findProductApi(record.id);
+                    if(pro.status == 405) {
+                        navigate('/admin/login');
+                    }
                 setModalEditProductOpen(true);
                 setProductDetail(pro.data);
                 }}  variant="solid">

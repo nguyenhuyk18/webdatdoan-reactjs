@@ -3,10 +3,12 @@ import { openNotificationSuccess , openNotificationError } from '../notification
 import { Col, Row } from 'antd';
 import { useEffect } from "react";
 import { savePermissionApi, updateRoleApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 
 
 const ModalPermission = (props) => {
+     const navigate = useNavigate();
     const { roleDetail , actionRoleHas , allAction , isModalPermissionOpen , handleCanclePermission } = props;
 
     useEffect(() => {
@@ -25,6 +27,15 @@ const ModalPermission = (props) => {
         const dataJSON = JSON.stringify(values);
         console.log(dataJSON);
         const rs = await savePermissionApi(dataJSON);
+
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
+
+
+        // if(rs.status == 403) {
+        //   navigate('/admin' , { state : { message : 'Bạn không có thẩm quyền để thực hiện ' } });
+        // }
 
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Phân quyền' , api);

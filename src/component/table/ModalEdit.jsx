@@ -2,9 +2,10 @@ import { Modal , Form , Input, Button , notification, Select , Upload  } from "a
 import { openNotificationSuccess , openNotificationError } from "../notification/NotificaComponent";
 import { useEffect } from "react";
 import { updateTableApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const ModalEditTable = (props) => {
-
+ const navigate = useNavigate();
     const { isModalEditTableOpen , handleCancleModalEdit , loadingData , listFloor , tableDetail } = props
 
     const [form] = Form.useForm();
@@ -26,6 +27,9 @@ const ModalEditTable = (props) => {
     const onFinish = async (values) => {
         const dataJSON  = JSON.stringify(values)
         const rs = await updateTableApi(dataJSON);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             loadingData();
             handleCancleModalEdit();

@@ -6,8 +6,10 @@ import './style.css'
 import ImgCrop from "antd-img-crop";
 import { useEffect, useState } from "react";
 import { saveProductApi, updateProductApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const ModalEditProduct = (props) => {
+    const navigate = useNavigate();
         // upload ant design
     const  __awaiter = (this && this.__awaiter) ||
     function (thisArg, _arguments, P, generator) {
@@ -111,6 +113,10 @@ const ModalEditProduct = (props) => {
         }
 
         const rs = await updateProductApi(data);
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
+
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Cập nhật sản phẩm' , api);
             form.resetFields();

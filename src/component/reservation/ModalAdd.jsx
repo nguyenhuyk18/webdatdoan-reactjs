@@ -1,8 +1,10 @@
 import { Modal , Form , Input, Button , notification, Select , Upload  } from "antd";
 import { openNotificationSuccess , openNotificationError } from "../notification/NotificaComponent";
 import { saveReservationApi } from "../../service/api.service";
+import { useNavigate } from "react-router-dom";
 
 const ModalAddReservation = (cc) => {
+    const navigate = useNavigate();
     const [form] = Form.useForm();
 
     const [api, contextHolder] = notification.useNotification();
@@ -14,6 +16,9 @@ const ModalAddReservation = (cc) => {
         // JSON.stringify   
         console.log(dataJSON);
         const rs = await saveReservationApi(dataJSON);
+                if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             openNotificationSuccess(rs.data.message , 'Thêm Đơn Đặt Bàn' , api);
             handleCancleModalAdd();
@@ -76,7 +81,18 @@ const ModalAddReservation = (cc) => {
             <Input/>
         </Form.Item>
 
-        <Form.Item name='note' label="Các Yêu Cầu">
+        <Form.Item name='note' label="Các Yêu Cầu"  >
+                <Input/>
+        </Form.Item>
+
+        <Form.Item name='type_buffet' label="Chọn Kiểu Buffet" rules={[{ required: true , message: 'Vui lòng chọn loại buffet' }]}>
+            <Select>
+                <Select.Option  value={1}>1 - Buffet Thường</Select.Option>
+                <Select.Option  value={2}>2 - Buffet Vip</Select.Option>
+            </Select>
+        </Form.Item>
+
+        <Form.Item name='total_price' label="Nhập Gía Tiền"  rules={[{ required: true , message: 'Vui lòng nhập giá tiền' } , { pattern: /^[0-9]+$/ , message: 'Vui lòng nhập giá tiền' }]} >
                 <Input/>
         </Form.Item>
 

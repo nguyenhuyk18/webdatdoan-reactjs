@@ -1,8 +1,10 @@
 import {  Drawer, Image } from 'antd';
 import { useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 const ProductDetail = (props) => {
-    const { productDetail , onClose , open } = props
+  // const navigate = useNavigate();
+  const { productDetail , onClose , open } = props
 
 
     return (

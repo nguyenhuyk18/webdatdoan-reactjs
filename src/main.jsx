@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 // import './index.css'
 import App from './App.jsx';
@@ -8,6 +8,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import BrandPage from './page/BrandPage.jsx';
 import ProductPage from './page/ProductPage.jsx';
 import StaffPage from './page/StaffPage.jsx';
@@ -17,6 +18,15 @@ import ActionPage from './page/ActionPage.jsx';
 import FloorPage from './page/FloorPage.jsx';
 import TablePage from './page/TablePage.jsx';
 import ReservationPage from './page/ReservationPage.jsx';
+import CustomerPage from './page/CustomerPage.jsx';
+import LoginPage from './page/LoginPage.jsx';
+import PrivateRoute from './page/PrivateRoute.jsx';
+import DoashBoardPage from './page/DoashboardPage.jsx';
+import CallFoodPage from './page/CallFoodPage.jsx';
+import CallFoodComponent from './component/callfood/CallFoodComponent.jsx';
+import FoodHadCallComponent from './component/callfood/FoodHadCallComponent.jsx';
+import LoginCallFood from './page/LoginCallFood.jsx';
+import PrivateRouteCallFood from './page/PrivateRouteCallFood.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,53 +34,95 @@ const router = createBrowserRouter([
     element:  <App/> ,
     // errorElement: <ErrorPage/>,
     children: [
-      // Trang admin
       {
-        path: "/admin",
-        element:  <AdminPage/> ,
-        // Các thành phần của trang admin
+        element : < PrivateRoute />, // element nay de check xem cac route con co hoat dong hay khong 
         children: [
-          { 
-            index: true, 
-            element: <h1>Trang Chủ</h1>
-          },
           {
-            path: "category",
-            element: <CategoryPage/> ,
+            path: "/admin",
+            element:  <AdminPage/> ,
+            // Các thành phần của trang admin
+            children: [
+              { 
+                index: true, 
+                element: <DoashBoardPage></DoashBoardPage>
+              },
+              {
+                path: "category",
+                element: <CategoryPage/> ,
+              },
+              {
+                path: "brand",
+                element: <BrandPage/>,
+              },
+              {
+                path: "product",
+                element: <ProductPage/>,
+              },
+              {
+                path: "staff",
+                element: <StaffPage/>
+              },
+              {
+                path: "role",
+                element: <RolePage/>
+              },
+              {
+                path: "action",
+                element: <ActionPage/>
+              },
+              {
+                path: "floor",
+                element: <FloorPage/>
+              },
+              {
+                path: 'table',
+                element: <TablePage/>
+              },
+              {
+                path: 'reservation',
+                element: <ReservationPage/>
+              },
+              {
+                path: 'customer',
+                element: <CustomerPage/>
+              }
+            ]
           },
-          {
-            path: "brand",
-            element: <BrandPage/>,
-          },
-          {
-            path: "product",
-            element: <ProductPage/>,
-          },
-          {
-            path: "staff",
-            element: <StaffPage/>
-          },
-          {
-            path: "role",
-            element: <RolePage/>
-          },
-          {
-            path: "action",
-            element: <ActionPage/>
-          },
-          {
-            path: "floor",
-            element: <FloorPage/>
-          },
-          {
-            path: 'table',
-            element: <TablePage/>
-          },
-          {
-            path: 'reservation',
-            element: <ReservationPage/>
-          }
+
         ]
+
+      },
+      
+      {
+        path: "/admin/login",
+        element : <LoginPage />
+      },
+
+
+      {
+        element : <PrivateRouteCallFood/>,
+        children : [
+            {
+              path : '/call-food',
+              element : <CallFoodPage/>,
+              children : [
+                {
+                  index : true,
+                  element : <CallFoodComponent />
+                },
+                {
+                  path : 'all-food-choosed',
+                  element: <FoodHadCallComponent />
+                }
+              ]
+            },
+          ]
+      },
+
+
+      {
+        path : '/login-call-food',
+        element : <LoginCallFood/>,
       }
     ]
   },
@@ -81,3 +133,55 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <RouterProvider router={router}/>
 )
+
+          // {
+          //   path: "/admin",
+          //   element:  <AdminPage/> ,
+          //   // Các thành phần của trang admin
+          //   children: [
+          //         { 
+          //           index: true, 
+          //           element: <h1>Trang Chủ</h1>
+          //         },
+          //         {
+          //           path: "category",
+          //           element: <CategoryPage/> ,
+          //         },
+          //         {
+          //           path: "brand",
+          //           element: <BrandPage/>,
+          //         },
+          //         {
+          //           path: "product",
+          //           element: <ProductPage/>,
+          //         },
+          //         {
+          //           path: "staff",
+          //           element: <StaffPage/>
+          //         },
+          //         {
+          //           path: "role",
+          //           element: <RolePage/>
+          //         },
+          //         {
+          //           path: "action",
+          //           element: <ActionPage/>
+          //         },
+          //         {
+          //           path: "floor",
+          //           element: <FloorPage/>
+          //         },
+          //         {
+          //           path: 'table',
+          //           element: <TablePage/>
+          //         },
+          //         {
+          //           path: 'reservation',
+          //           element: <ReservationPage/>
+          //         },
+          //         {
+          //           path: 'customer',
+          //           element: <CustomerPage/>
+          //         }
+          //   ]
+          // },

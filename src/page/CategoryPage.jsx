@@ -1,11 +1,11 @@
-import { Space, Table, Tag , Flex, Button  , message, Popconfirm  } from 'antd';
+import {  Table, Flex, Button  , message, Popconfirm  } from 'antd';
 import { deleteCategoryApi, getAllCategory } from '../service/api.service';
 import { useEffect, useState } from 'react';
 import ModalAddCategory from '../component/category/ModalAdd';
 import ModalEditCategory from '../component/category/ModalEdit';
-
-
+import { useNavigate } from 'react-router-dom';
 const CategoryPage = () => {
+    const navigate = useNavigate();
     const [ categoryList , SetCategoryList ] = useState([]);
     const [isModalAddOpen, setIsModalAddOpen] = useState(false);
     const [isModalEditOpen , setModalEditOpen] = useState(false);
@@ -13,7 +13,10 @@ const CategoryPage = () => {
 
     const confirm = async e => {
         const rs = await deleteCategoryApi(e);
-        console.log(e)
+
+        if(rs.status == 405) {
+          navigate('/admin/login');
+        }
         if(rs.status == 201) {
             message.success('Xóa thành công !!!');
             loadingData();
@@ -77,6 +80,12 @@ const CategoryPage = () => {
 
     const loadingData = async () => {
         const allCategory = await getAllCategory();
+        if(allCategory.status == 405) {
+            navigate('/admin/login');
+        }
+        if(allCategory.status == 403) {
+            navigate('/admin' , { state : { message : allCategory.data.message } });
+        }
         SetCategoryList(allCategory.data);        
     }
 
