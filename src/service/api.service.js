@@ -530,4 +530,34 @@ const loginToCallFood = async (data) => {
 }
 
 
-export { loginToCallFood, findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi, deleteCustomerApi, saveCustomerApi, findCustomerApi, updateCustomerApi, loginToAdmin, getProductClient } 
+const getAllCallFood = async (status) => {
+    let backendURL = '/api/v1/admin/call-food';
+    if (status) {
+        backendURL += `?status=${status}`;
+    }
+    const rs = await axios.get(backendURL);
+    return rs;
+}
+
+
+
+const updateCallFood = async (data) => {
+    let backendURL = '/api/v1/admin/call-food';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const rs = await axios.put(backendURL, data, config);
+    return rs;
+}
+
+
+const deleteCallFood = async (id) => {
+    const backendURL = `/api/v1/admin/call-food/${id}`;
+    const rs = await axios.delete(backendURL);
+    return rs;
+}
+
+export { deleteCallFood, updateCallFood, getAllCallFood, loginToCallFood, findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi, deleteCustomerApi, saveCustomerApi, findCustomerApi, updateCustomerApi, loginToAdmin, getProductClient } 

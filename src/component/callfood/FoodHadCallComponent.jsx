@@ -1,15 +1,23 @@
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const FoodHadCallComponent = () => {
     const navigate = useNavigate()
     const [allFoodCalled , setFoodsCalled] = useState([]);
-
+    const [dataDecode , setDataDecode] = useState(null);
     const [amout , setAmount] = useState({});
+    const [isSocket , setSocket] = useState();
 
     useEffect(()=> {
       loadingData();
+
+
+      const socket = io("http://localhost:1827", {});
+      socket.emit("connect-call-food");
+      setSocket(socket);
     }, []);
 
     const loadingData = () => {
@@ -62,6 +70,37 @@ const FoodHadCallComponent = () => {
 
       loadingData();
     }
+
+    const handleOnClick = () => {
+      const login_call_food = localStorage.getItem('login-call-food');
+      const call_food = localStorage.getItem('call-food');
+
+      if(!login_call_food) {
+        navigate('/login-call-food');
+      }
+
+      const decode = jwtDecode(login_call_food);
+
+
+      // const jsonFoods = decode;
+      const table_id = decode.table_id;
+      const status = 1;
+      const floor_id = decode.floor_id;
+
+      const tmp = {
+        foods : JSON.parse(call_food),
+        table_id : table_id,
+        status : status,
+        floor_id : floor_id
+      }
+
+      const tmpJSON = JSON.stringify(tmp);
+
+      isSocket.emit('call-food-from-client' ,  tmpJSON );
+      localStorage.removeItem('call-food');
+      navigate('/call-food')
+    }
+
 // console.log(amout)
     return (
         <>
@@ -100,7 +139,7 @@ const FoodHadCallComponent = () => {
                   </div>
                   <div className="cac-nut-bam d-flex justify-content-center pb-5">
                       <Link to="/call-food" className="btn btn-danger me-5">Quay Lại</Link>
-                      <button className="btn btn-success" >Gọi Món</button>
+                      <button className="btn btn-success" onClick={handleOnClick} >Gọi Món</button>
                 </div>
                 </div>
 

@@ -3,18 +3,23 @@ import { getProductClient } from "../../service/api.service";
 import { Link } from "react-router-dom";
 import NotificationAddToCarted from "./NotificationAddToCarted";
 import { useNavigate } from "react-router-dom";
+// import { io } from "socket.io-client";
 // import style from 'NotificationAddToCarted.css'
 // import { notification } from "re"
 
 const CallFoodComponent = () => {
+    
     const navigate = useNavigate();
     const [ listFood , setListFood ] = useState([]); 
-    const [isOpenNot , setIsOpenNot] = useState(false); 
-    
+    const [isOpenNot , setIsOpenNot] = useState(false);
+
+   
+    // console.log(socket)
 
     useEffect(() => {
-        loadingData();
         
+        loadingData();
+
     } , [])
 
     const loadingData = async () => {

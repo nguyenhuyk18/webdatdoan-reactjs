@@ -14,7 +14,7 @@ const CallFoodPage = () => {
 
     return (
         <>
-            <NavbarComponentCallFood/>
+            <NavbarComponentCallFood  />
             < Outlet />
             <FooterComponent />
         </>

@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import { BorderHorizontalOutlined, BorderOuterOutlined, CarryOutOutlined, CodepenOutlined, CustomerServiceOutlined, DashboardOutlined, DropboxOutlined, InteractionOutlined, ProductOutlined, TabletOutlined, UserAddOutlined , DownOutlined , SettingOutlined  } from '@ant-design/icons';
+import { BorderHorizontalOutlined, BorderOuterOutlined, CarryOutOutlined, CodepenOutlined, CustomerServiceOutlined, DashboardOutlined, DropboxOutlined, InteractionOutlined, ProductOutlined, TabletOutlined, UserAddOutlined , DownOutlined , SettingOutlined, PhoneOutlined, ProjectOutlined, CloudServerOutlined  } from '@ant-design/icons';
 import {Avatar ,Button, Flex, Layout, Menu, theme , Dropdown, Space  } from 'antd';
 import '../assets/Admin.css'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ const AdminPage = () => {
 
     // const token = "eyJ0eXAiO.../// jwt token";
     const decoded = jwtDecode(jwtAccess);
-
+    console.log(decoded)
     // console.log(decoded);
     setImageAvatar(`${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/avatar-staff/${decoded.id}`);
     setNameStaff(decoded.fullname);
@@ -116,6 +116,20 @@ const AdminPage = () => {
       icon : <CustomerServiceOutlined />,
       key : 'Customer',
       path : '/admin/customer'
+    },
+    
+    {
+      label : <Link to={'/admin/call-food-chef'} onClick={ handleDisplayLoading } >Món Ăn Đang Gọi</Link>,
+      icon : <PhoneOutlined />,
+      key : 'call-food-chef',
+      path : '/admin/call-food-chef'
+    },
+
+    {
+      label : <Link to={'/admin/call-food-done'} onClick={ handleDisplayLoading } >Món Ăn Đã Chuẩn Bị Xong</Link>,
+      icon : <CloudServerOutlined />,
+      key : 'call-food-done',
+      path : '/admin/call-food-done'
     }
 
   ];

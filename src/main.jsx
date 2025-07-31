@@ -27,6 +27,10 @@ import CallFoodComponent from './component/callfood/CallFoodComponent.jsx';
 import FoodHadCallComponent from './component/callfood/FoodHadCallComponent.jsx';
 import LoginCallFood from './page/LoginCallFood.jsx';
 import PrivateRouteCallFood from './page/PrivateRouteCallFood.jsx';
+import CallFoodAdminChef from './page/CallFoodAdminChef.jsx';
+import CallFoodAdminDelivery from './page/CallFoodAdminDelivery.jsx';
+import ClientPage from './page/ClientPage.jsx';
+import HomePage from './page/HomePage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +89,14 @@ const router = createBrowserRouter([
               {
                 path: 'customer',
                 element: <CustomerPage/>
+              },
+              {
+                path: 'call-food-chef',
+                element : <CallFoodAdminChef/>
+              },
+              {
+                path: 'call-food-done',
+                element : <CallFoodAdminDelivery/>
               }
             ]
           },
@@ -123,6 +135,17 @@ const router = createBrowserRouter([
       {
         path : '/login-call-food',
         element : <LoginCallFood/>,
+      },
+
+      {
+        path : '/',
+        element : <ClientPage/>,
+        children : [
+          {
+            index: true,
+            element : <HomePage/>
+          }
+        ]
       }
     ]
   },
