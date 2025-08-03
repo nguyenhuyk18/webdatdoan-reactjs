@@ -1,13 +1,17 @@
-const ModalRegister = () => {
+const ModalRegister = (props) => {
+  const { isRegisterOpen , setIsRegisterOpen } = props
+
+
     return (
-<div className="modal fade" id="modaldangky">
+      <>
+<div className={`modal fade ${isRegisterOpen ? 'show d-block'  : ''} `}  id="modaldangky">
   <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
     <div className="modal-content">
       <div className="modal-header">
         <h5 className="modal-title" id="modalTitleId">
           Đăng Ký Tài Khoản
         </h5>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" onClick={() => setIsRegisterOpen(false)} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="">
         <div className="modal-body">
@@ -39,6 +43,10 @@ const ModalRegister = () => {
     </div>
   </div>
 </div>
+
+      {isRegisterOpen && <div className="modal-backdrop fade show"></div>}
+      </>
+
     )
 }
 

@@ -25,7 +25,7 @@ const AdminPage = () => {
 
     // const token = "eyJ0eXAiO.../// jwt token";
     const decoded = jwtDecode(jwtAccess);
-    console.log(decoded)
+    // console.log(decoded)
     // console.log(decoded);
     setImageAvatar(`${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/avatar-staff/${decoded.id}`);
     setNameStaff(decoded.fullname);
@@ -104,10 +104,17 @@ const AdminPage = () => {
     },
 
     {
-      label : <Link to={'/admin/reservation'} onClick={ handleDisplayLoading } >Quản Lý Đặt Chỗ</Link>,
+      label : <Link to={'/admin/reservation'} onClick={ handleDisplayLoading } >Lịch Sử Đặt Chỗ</Link>,
       icon : <BorderHorizontalOutlined />,
       key : 'Reservation',
       path : '/admin/reservation'
+    },
+
+    {
+      label : <Link to={'/admin/new_reservation'} onClick={ handleDisplayLoading } >Đặt Chỗ Mới Nhất</Link>,
+      icon : <BorderHorizontalOutlined />,
+      key : 'new_reservation',
+      path : '/admin/new_reservation'
     },
 
 

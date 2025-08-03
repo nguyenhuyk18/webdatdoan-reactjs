@@ -5,11 +5,9 @@ import NavbarComponentCallFood from '../component/navbar/NavbarCallFoodComponent
 import { useEffect } from 'react';
 
 const CallFoodPage = () => {
-    useEffect(() => {
-        import('../assets/vendor/bootstrap.min.css');
-        import('../assets/vendor/style.css');
-        import('../assets/vendor/fontawesome-free-6.7.2-web/css/all.css');
-    }, []);
+    import('../assets/vendor/bootstrap-5.0.2-dist/css/bootstrap.min.css');
+    import('../assets/vendor/style.css');
+    import('../assets/vendor/fontawesome-free-6.7.2-web/css/all.css');
 
 
     return (

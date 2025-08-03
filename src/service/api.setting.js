@@ -30,7 +30,8 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
     const isLogin = localStorage.getItem('login');
     const isLoginCallFood = localStorage.getItem('login-call-food');
-
+    // const isLoginSite = localStorage.getItem('login-client-site');
+    // console.log(isLoginSite)
     if (isLogin) {
         config.headers.authorization = `Bearer ${isLogin}`;
     }

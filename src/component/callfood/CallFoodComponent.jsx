@@ -3,6 +3,7 @@ import { getProductClient } from "../../service/api.service";
 import { Link } from "react-router-dom";
 import NotificationAddToCarted from "./NotificationAddToCarted";
 import { useNavigate } from "react-router-dom";
+
 // import { io } from "socket.io-client";
 // import style from 'NotificationAddToCarted.css'
 // import { notification } from "re"
@@ -28,14 +29,11 @@ const CallFoodComponent = () => {
             navigate('/login-call-food');
         }
         setListFood(rs.data);
-        // console.log(listFood)
     }
-
-    // console.log(localStorage.getItem('call-food'));
 
     const handleAddFood = (e) => {
         let data = localStorage.getItem('call-food');
-
+        loadingData()
         setIsOpenNot(true);
 
         setTimeout(() => {
@@ -77,6 +75,10 @@ const CallFoodComponent = () => {
         
     }
 
+    const checkLogin = () => {
+        // check login
+        loadingData();
+    }
 
     return (
         <>
@@ -125,7 +127,7 @@ const CallFoodComponent = () => {
                     </div>
                     <div className="pagegination ">
                     <div className="d-flex justify-content-center">
-                        <Link to={'/call-food/all-food-choosed'} className="btn btn-success" style={{ color : '#fff' }} >Xác Nhận</Link>
+                        <Link to={'/call-food/all-food-choosed'} onClick={checkLogin} className="btn btn-success" style={{ color : '#fff' }} >Xác Nhận</Link>
                     </div>
                     </div>
 

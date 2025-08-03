@@ -9,24 +9,7 @@ const TeamComponent = () => {
       <div className="container teammember text-center">
         <h2 className="mb-4">CÁC ĐẦU BẾP HÀNG ĐẦU CỦA CHÚNG TÔI</h2>
         <div className="row">
-          <div className="col-md-4">
-            <div className="chef">
-              <div className="chef-info mb-3">
-                <img className="w-100" src={walter} alt="chefs-1"/>
-              </div>
-              <div className="detail-chef">
-                <h4 className="name">Walter White</h4>
-                <p className="role mb-0">Chef</p>
-                <p className="desc-chef">
-                  Walter Hartwell "Walt" White Sr. , còn được biết đến với bút danh Heisenberg và
-                  thường được gọi là Ông White , là một nhà hóa học, giáo viên trường học và nhà phân
-                  phối ma túy lớn người Mỹ đến từ Albuquerque, New Mexico , đế chế ma túy của ông đã
-                  trở thành hoạt động sản xuất ma túy đá lớn nhất trong lịch sử Hoa Kỳ
-                </p>
-              </div>
-            </div>
 
-          </div>
           <div className="col-md-4">
             <div className="chef">
               <div className="chef-info mb-3">
@@ -45,6 +28,24 @@ const TeamComponent = () => {
               </div>
             </div>
 
+
+          </div>
+                    <div className="col-md-4">
+            <div className="chef">
+              <div className="chef-info mb-3">
+                <img className="w-100" src={walter} alt="chefs-1"/>
+              </div>
+              <div className="detail-chef">
+                <h4 className="name">Walter White</h4>
+                <p className="role mb-0">Chef</p>
+                <p className="desc-chef">
+                  Walter Hartwell "Walt" White Sr. , còn được biết đến với bút danh Heisenberg và
+                  thường được gọi là Ông White , là một nhà hóa học, giáo viên trường học và nhà phân
+                  phối ma túy lớn người Mỹ đến từ Albuquerque, New Mexico , đế chế ma túy của ông đã
+                  trở thành hoạt động sản xuất ma túy đá lớn nhất trong lịch sử Hoa Kỳ
+                </p>
+              </div>
+            </div>
 
           </div>
           <div className="col-md-4">

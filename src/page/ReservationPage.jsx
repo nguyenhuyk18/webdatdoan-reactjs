@@ -85,7 +85,7 @@ const ReservationPage = () => {
         key : 'status',
         // width : 190
         render: (_ , record) => (
-            record.status == 3 ?  <p>Đã Đến</p> : record.status == 2 ? <p>Đã Hủy</p> : record.status == 1 ? <p>Đã Đặt</p> : ''
+            record.status == 3 ?  <p>Đã Đến</p> : record.status == 2 ? <p>Đã Hủy</p> : record.status == 1 ? <p>Đã Đặt</p> : record.status == 4 ? <p>Đã Thanh Toán</p> : ''
         ),
     },
     {

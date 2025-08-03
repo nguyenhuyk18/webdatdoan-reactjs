@@ -71,10 +71,10 @@ const ModalAddReservation = (cc) => {
         </Form.Item>
         <Form.Item name='status' label="Chọn Trạng Thái" rules={[{ required: true , message: 'Vui Lòng Chọn Trạng Thái' }]}>
             <Select>
-                
                 <Select.Option  value={1}>Đã Đặt</Select.Option>
                 <Select.Option  value={2}>Hủy</Select.Option>
                 <Select.Option  value={3}>Đã Đến</Select.Option>
+                <Select.Option  value={4}>Đã Thanh Toán</Select.Option>
             </Select>
         </Form.Item>
         <Form.Item name='amount_cus' label="Số Người Đến" rules={[{ required: true , message: 'Vui lòng nhập số người' } , {pattern: /^[0-9]+$/ , message : 'Vui Lòng Nhập Số Nguyên'}]}> 

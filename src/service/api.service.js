@@ -416,11 +416,21 @@ const deleteTableApi = async (id) => {
 }
 
 // reservation
-const getReservationApi = async () => {
-    const backendURL = '/api/v1/admin/reservation';
+const getReservationApi = async (trangthai) => {
+    let backendURL = '/api/v1/admin/reservation';
+    if (trangthai) {
+        backendURL += '?trangthai=true';
+    }
+    console.log(trangthai)
     const rs = await axios.get(backendURL);
     return rs;
 }
+
+// const getReservationCalledApi = async () => {
+//     const backendURL = '/api/v1/admin/reservation';
+//     const rs = await axios.get(backendURL);
+//     return rs;
+// }
 
 
 const findReservationApi = async (id) => {
@@ -560,4 +570,74 @@ const deleteCallFood = async (id) => {
     return rs;
 }
 
-export { deleteCallFood, updateCallFood, getAllCallFood, loginToCallFood, findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi, deleteCustomerApi, saveCustomerApi, findCustomerApi, updateCustomerApi, loginToAdmin, getProductClient } 
+const getFloorApiClient = async () => {
+    const backendURL = '/api/v1/client/floor';
+    const config = {
+        withCredentials: true,
+    }
+    const rs = await axios.get(backendURL, config);
+    return rs;
+}
+
+const getTableApiClient = async (id_floor) => {
+    const backendURL = `/api/v1/client/table/${id_floor}`;
+    const config = {
+        withCredentials: true,
+    }
+    const rs = await axios.get(backendURL, config);
+    return rs;
+}
+
+
+const loginToClientSiteApi = async (data) => {
+    const backendURL = '/api/v1/client/log-in';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        withCredentials: true // ⚠️ BẮT BUỘC để nhận cookie
+
+    }
+
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+const placeOrderClientApi = async (data) => {
+    const backendURL = '/api/v1/client/place-order';
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true,
+    }
+
+    const rs = await axios.post(backendURL, data, config);
+    return rs;
+}
+
+
+const getProfileClienApi = async () => {
+    const backendURL = '/me';
+    const config = {
+        withCredentials: true,
+    }
+
+    const rs = await axios.get(backendURL, config);
+    return rs;
+}
+
+
+const logoutClientApi = async () => {
+    const backendURL = '/log-out-client';
+    const config = {
+        withCredentials: true,
+    }
+    const rs = await axios.get(backendURL, config);
+    return rs;
+}
+
+export { logoutClientApi, getProfileClienApi, placeOrderClientApi, loginToClientSiteApi, getFloorApiClient, getTableApiClient, deleteCallFood, updateCallFood, getAllCallFood, loginToCallFood, findTableApi, getTableApi, saveTableApi, updateTableApi, deleteTableApi, getAllCategory, saveCategoryApi, updateCategoryApi, deleteCategoryApi, getAllBrandApi, saveBrandApi, updateBrandApi, deleteBrandApi, getProductApi, findProductApi, saveProductApi, deleteProductApi, updateProductApi, getAllStaffApi, findStaffApiByID, saveStaffApi, deleteStaffApi, updateStaffApi, getRoleApi, findRoleApi, getWardApi, findWardApi, findWardByDistrict, getDistrictByProvince, getDistrictApi, findDistrict, getProvinceApi, findProvinceApi, changeImageStaffApi, saveRoleApi, deleteRoleApi, updateRoleApi, getActionApi, getPermissionApi, savePermissionApi, getFloorApi, saveFloorApi, deleteFloorApi, updateFloorApi, findFloorApi, getReservationApi, findReservationApi, saveReservationApi, updateReservationApi, deleteReservationApi, getCustomerApi, deleteCustomerApi, saveCustomerApi, findCustomerApi, updateCustomerApi, loginToAdmin, getProductClient } 

@@ -31,72 +31,79 @@ import CallFoodAdminChef from './page/CallFoodAdminChef.jsx';
 import CallFoodAdminDelivery from './page/CallFoodAdminDelivery.jsx';
 import ClientPage from './page/ClientPage.jsx';
 import HomePage from './page/HomePage.jsx';
+import PolicyPlaceOrderComponent from './component/client/PolicyPlaceOrderComponent.jsx';
+import PlaceTableComponent from './component/client/PlaceTableComponent.jsx';
+import NewReservationPage from './page/NewReservationPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element:  <App/> ,
+    element: <App />,
     // errorElement: <ErrorPage/>,
     children: [
       {
-        element : < PrivateRoute />, // element nay de check xem cac route con co hoat dong hay khong 
+        element: < PrivateRoute />, // element nay de check xem cac route con co hoat dong hay khong 
         children: [
           {
             path: "/admin",
-            element:  <AdminPage/> ,
+            element: <AdminPage />,
             // Các thành phần của trang admin
             children: [
-              { 
-                index: true, 
+              {
+                index: true,
                 element: <DoashBoardPage></DoashBoardPage>
               },
               {
                 path: "category",
-                element: <CategoryPage/> ,
+                element: <CategoryPage />,
               },
               {
                 path: "brand",
-                element: <BrandPage/>,
+                element: <BrandPage />,
               },
               {
                 path: "product",
-                element: <ProductPage/>,
+                element: <ProductPage />,
               },
               {
                 path: "staff",
-                element: <StaffPage/>
+                element: <StaffPage />
               },
               {
                 path: "role",
-                element: <RolePage/>
+                element: <RolePage />
               },
               {
                 path: "action",
-                element: <ActionPage/>
+                element: <ActionPage />
               },
               {
                 path: "floor",
-                element: <FloorPage/>
+                element: <FloorPage />
               },
               {
                 path: 'table',
-                element: <TablePage/>
+                element: <TablePage />
               },
               {
                 path: 'reservation',
-                element: <ReservationPage/>
+                element: <ReservationPage />
+              },
+              {
+                path: 'new_reservation',
+                element: <NewReservationPage />
               },
               {
                 path: 'customer',
-                element: <CustomerPage/>
+                element: <CustomerPage />
               },
               {
                 path: 'call-food-chef',
-                element : <CallFoodAdminChef/>
+                element: <CallFoodAdminChef />
               },
               {
                 path: 'call-food-done',
-                element : <CallFoodAdminDelivery/>
+                element: <CallFoodAdminDelivery />
               }
             ]
           },
@@ -104,107 +111,67 @@ const router = createBrowserRouter([
         ]
 
       },
-      
+
       {
         path: "/admin/login",
-        element : <LoginPage />
+        element: <LoginPage />
       },
 
 
       {
-        element : <PrivateRouteCallFood/>,
-        children : [
-            {
-              path : '/call-food',
-              element : <CallFoodPage/>,
-              children : [
-                {
-                  index : true,
-                  element : <CallFoodComponent />
-                },
-                {
-                  path : 'all-food-choosed',
-                  element: <FoodHadCallComponent />
-                }
-              ]
-            },
-          ]
-      },
-
-
-      {
-        path : '/login-call-food',
-        element : <LoginCallFood/>,
-      },
-
-      {
-        path : '/',
-        element : <ClientPage/>,
-        children : [
+        element: <PrivateRouteCallFood />,
+        children: [
           {
-            index: true,
-            element : <HomePage/>
-          }
+            path: '/call-food',
+            element: <CallFoodPage />,
+            children: [
+              {
+                index: true,
+                element: <CallFoodComponent />
+              },
+              {
+                path: 'all-food-choosed',
+                element: <FoodHadCallComponent />
+              }
+            ]
+          },
         ]
-      }
+      },
+
+
+      {
+        path: '/login-call-food',
+        element: <LoginCallFood />,
+      },
+
+
     ]
   },
+
+  {
+    path: '/',
+    element: <ClientPage />,
+    children: [
+
+      {
+        index: true,
+        element: <HomePage />
+      },
+      {
+        path: 'chinh-sach-dat-ban.html',
+        element: <PolicyPlaceOrderComponent />
+      },
+      {
+        path: 'dat-ban.html',
+        element: <PlaceTableComponent />
+      }
+
+    ]
+  }
 
 ]);
 
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 )
-
-          // {
-          //   path: "/admin",
-          //   element:  <AdminPage/> ,
-          //   // Các thành phần của trang admin
-          //   children: [
-          //         { 
-          //           index: true, 
-          //           element: <h1>Trang Chủ</h1>
-          //         },
-          //         {
-          //           path: "category",
-          //           element: <CategoryPage/> ,
-          //         },
-          //         {
-          //           path: "brand",
-          //           element: <BrandPage/>,
-          //         },
-          //         {
-          //           path: "product",
-          //           element: <ProductPage/>,
-          //         },
-          //         {
-          //           path: "staff",
-          //           element: <StaffPage/>
-          //         },
-          //         {
-          //           path: "role",
-          //           element: <RolePage/>
-          //         },
-          //         {
-          //           path: "action",
-          //           element: <ActionPage/>
-          //         },
-          //         {
-          //           path: "floor",
-          //           element: <FloorPage/>
-          //         },
-          //         {
-          //           path: 'table',
-          //           element: <TablePage/>
-          //         },
-          //         {
-          //           path: 'reservation',
-          //           element: <ReservationPage/>
-          //         },
-          //         {
-          //           path: 'customer',
-          //           element: <CustomerPage/>
-          //         }
-          //   ]
-          // },
